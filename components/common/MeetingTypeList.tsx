@@ -1,22 +1,55 @@
-"use client"
-import Image from "next/image";
-import React from "react";
+"use client";
+
+import { useRouter } from "next/navigation";
+import React, { useState } from "react";
+import HomeCard from "./HomeCard";
+import MeetingModel from "./MeetingModel";
 
 const MeetingTypeList = () => {
+  const router = useRouter();
+  const [meetingState, setMeetingState] = useState<
+    "isScheduleMeeting" | "isJoiningMeeting" | "isInstantMeeting" | undefined
+  >();
+
+  const createMeeting = () => {}
   return (
     <section className="grid grid-cols-1 gap-5 md:grid-cols-2 xl:grid-cols-4 ">
-      <div
-        className="bg-[#FF742E] px-4 py-6 flex flex-col justify-between w-full xl:max-w-[270px] min-h-[260px] rounded-[14px] cursor-pointer"
-        onClick={() => {}}
-      >
-        <div className="flex justify-center items-center glassmorphism size-12 rounded-[10px]">
-          <Image src='/icons/add-meeting.svg' alt='Add meeting' width={32} height={32}/>
-        </div>
-        <div className="flex flex-col gap-2">
-          <h1>New Meeting</h1>
-          <p>Start an instant meeting</p>
-        </div>
-      </div>
+      <HomeCard
+        text="New Meeting"
+        description="Start an instant meeting"
+        bgColor="#FF742E"
+        iconUrl="/icons/add-meeting.svg"
+        handleClick={() => setMeetingState("isInstantMeeting")}
+      />
+      <HomeCard
+        text="Join Meeting"
+        description="Join via invitation link"
+        bgColor="#0E78F9"
+        iconUrl="/icons/join-meeting.svg"
+        handleClick={() => setMeetingState("isJoiningMeeting")}
+      />
+      <HomeCard
+        text="Schedule Meeting"
+        description="Plan your meeting"
+        bgColor="#830EF9"
+        iconUrl="/icons/schedule.svg"
+        handleClick={() => setMeetingState("isScheduleMeeting")}
+      />
+      <HomeCard
+        text="View Recordings"
+        description="View meeting recordings"
+        bgColor="#F9A90E"
+        iconUrl="/icons/recordings.svg"
+        handleClick={() => router.push("/recordings")}
+      />
+      <MeetingModel
+        onOpen={meetingState === "isInstantMeeting"}
+        onClose={() => setMeetingState(undefined)}
+        title="Start an instant meeting"
+        className="text-center"
+        buttonText="Start Meeting"
+        handleClick={createMeeting}
+      />
     </section>
   );
 };
