@@ -1,10 +1,15 @@
 import { Suspense, type ReactNode } from "react";
 import { auth } from "@clerk/nextjs/server";
+import StreamClientProvider from "@/providers/StreamClientProvider";
 
 async function ProtectedContent({ children }: { children: ReactNode }) {
   await auth.protect();
 
-  return <main>{children}</main>;
+  return (
+    <main>
+      <StreamClientProvider>{children}</StreamClientProvider>
+    </main>
+  );
 }
 
 export default function ProtectedLayout({ children }: { children: ReactNode }) {
