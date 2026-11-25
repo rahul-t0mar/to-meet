@@ -135,3 +135,7 @@
   backdrop-filter: blur(4px);
   -webkit-backdrop-filter: blur(4px);
 }
+
+.show-block {
+  display: block !important;
+}

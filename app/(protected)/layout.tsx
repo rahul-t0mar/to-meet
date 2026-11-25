@@ -1,13 +1,24 @@
 import { Suspense, type ReactNode } from "react";
-import { auth } from "@clerk/nextjs/server";
+import { auth, currentUser } from "@clerk/nextjs/server";
 import StreamClientProvider from "@/providers/StreamClientProvider";
 
 async function ProtectedContent({ children }: { children: ReactNode }) {
-  await auth.protect();
+  const { userId } = await auth.protect();
+  const clerkUser = await currentUser();
+
+  const user = {
+    id: userId,
+    name:
+      clerkUser?.fullName ||
+      clerkUser?.username ||
+      clerkUser?.primaryEmailAddress?.emailAddress ||
+      userId,
+    image: clerkUser?.imageUrl,
+  };
 
   return (
     <main>
-      <StreamClientProvider>{children}</StreamClientProvider>
+      <StreamClientProvider user={user}>{children}</StreamClientProvider>
     </main>
   );
 }

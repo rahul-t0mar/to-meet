@@ -13,49 +13,28 @@ type StreamUser = { id: string; name: string; image?: string };
 const StreamClientInner = ({ user, children }: { user: StreamUser; children: ReactNode }) => {
   if (!apiKey) throw new Error("Stream API key missing");
 
-  // No user passed, so nothing connects (or calls the server action) during render
   const [client] = useState(() => new StreamVideoClient(apiKey));
-  const [connected, setConnected] = useState(false);
 
   useEffect(() => {
-    let cancelled = false;
-
-    client
-      .connectUser(user, tokenProvider)
-      .then(() => {
-        if (!cancelled) setConnected(true);
-      })
-      .catch(console.error);
-
+    client.connectUser(user, tokenProvider).catch(console.error);
     return () => {
-      cancelled = true;
-      setConnected(false);
       client.disconnectUser().catch(console.error);
     };
   }, [client, user.id, user.name, user.image]);
 
-  if (!connected) return <Loader />;
-
   return <StreamVideo client={client}>{children}</StreamVideo>;
 };
 
-const StreamClientProvider = ({ children }: { children: ReactNode }) => {
-  const { user, isLoaded } = useUser();
-
-  if (!isLoaded || !user) return <Loader />;
-
-  return (
-    <StreamClientInner
-      key={user.id}
-      user={{
-        id: user.id,
-        name: user.username || user.id,
-        image: user.imageUrl,
-      }}
-    >
-      {children}
-    </StreamClientInner>
-  );
-};
+const StreamClientProvider = ({
+  user,
+  children,
+}: {
+  user: StreamUser;
+  children: ReactNode;
+}) => (
+  <StreamClientInner key={user.id} user={user}>
+    {children}
+  </StreamClientInner>
+);
 
 export default StreamClientProvider;
