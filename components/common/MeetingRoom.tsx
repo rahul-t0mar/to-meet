@@ -73,7 +73,7 @@ const MeetingRoom = () => {
         <CallControls
           onLeave={async () => {
             await releaseDevices(call);
-            router.replace("/");
+            router.push("/");
           }}
         />
         <DropdownMenu>

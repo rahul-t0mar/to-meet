@@ -39,8 +39,8 @@ const MeetingCard = ({
           </div>
         </div>
       </article>
-      <article className={cn("flex justify-center relative", {})}>
-        <div className="relative flex w-full max-sm:hidden">
+      <article className="flex items-center justify-between gap-4 relative">
+        <div className="relative flex flex-1 min-w-0 max-sm:hidden">
           {avatarImages.map((img, index) => (
             <Image
               key={index}
@@ -52,13 +52,17 @@ const MeetingCard = ({
               style={{ top: 0, left: index * 28 }}
             />
           ))}
+
           <div className="flex-center absolute left-[136px] size-10 rounded-full border-[5px] border-input bg-muted">
             +5
           </div>
         </div>
+
         {!isPreviousMeeting && (
           <div className="flex gap-2">
-            <Button onClick={handleClick} className="rounded bg-primary px-6">
+            <Button
+              onClick={handleClick}
+              className="rounded-lg bg-sidebar-primary px-6 text-sidebar-primary-foreground cursor-pointer hover:text-foreground">
               {buttonIcon1 && (
                 <Image src={buttonIcon1} alt="feature" width={20} height={20} />
               )}
@@ -72,7 +76,7 @@ const MeetingCard = ({
                   type: "success",
                 });
               }}
-              className="bg-primary px-6 w-fit">
+              className="bg-primary px-6 w-fit cursor-pointer hover:bg-input hover:text-accent-foreground ">
               <Image
                 src="/icons/copy.svg"
                 alt="feature"
