@@ -140,7 +140,9 @@ const MeetingTypeList = () => {
             </label>
             <ReactDatePicker
               selected={values.dateTime}
-              onChange={(date) => setValues({ ...values, dateTime: date! })}
+              onChange={(date: Date | null) =>
+                setValues({ ...values, dateTime: date! })
+              }
               showTimeSelect
               timeFormat="hh:mm aa"
               timeIntervals={15}
@@ -182,9 +184,12 @@ const MeetingTypeList = () => {
         buttonText="Join Meeting"
         handleClick={() => {
           router.push(values.link);
-        }}
-      >
-        <Input placeholder="Meeting Link" className="border-none focus-visible:ring-0 focus-visible:ring-offset-0" onChange={(e) => setValues({...values, link:e.target.value})}/>
+        }}>
+        <Input
+          placeholder="Meeting Link"
+          className="border-none focus-visible:ring-0 focus-visible:ring-offset-0"
+          onChange={(e) => setValues({ ...values, link: e.target.value })}
+        />
       </MeetingModel>
     </section>
   );

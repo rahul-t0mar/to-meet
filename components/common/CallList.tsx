@@ -1,7 +1,6 @@
 "use client";
 import { useGetCalls } from "@/hooks/useGetCalls";
-import { CallRecording } from "@stream-io/node-sdk";
-import { Call } from "@stream-io/video-react-sdk";
+import { Call, CallRecording } from "@stream-io/video-react-sdk";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import MeetingCard from "./MeetingCard";
@@ -86,9 +85,8 @@ const CallList = ({ type }: { type: "ended" | "upcoming" | "recordings" }) => {
               }
               title={
                 isRecording
-                  ? recording.filename?.substring(0, 20)
+                  ? recording.filename?.substring(0, 20) || "Recording"
                   : call.state?.custom?.description?.substring(0, 30) ||
-                    meeting.filename?.substring(0, 20) ||
                     "Personal Meeting"
               }
               date={
