@@ -2,8 +2,7 @@
 
 A full-stack video conferencing app inspired by Zoom. Start instant meetings, schedule calls for later, join with a link, and watch recordings of past meetings, all with secure authentication and real-time video.
 
-
-**Live demo:** [your-app.vercel.app](https://your-app.vercel.app)
+**Live demo:** [to-meet-gamma.vercel.app](https://to-meet-gamma.vercel.app/)
 
 ## ✨ Features
 
